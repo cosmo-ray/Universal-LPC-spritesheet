@@ -1,0 +1,12 @@
+{
+    "name" : "lpcs",
+    "init-scripts" : [
+	["lua" ,  "init_lpcs" ]
+    ],
+    "pre-load" : [
+	{
+	    "file" : "lpcs.lua",
+	    "type" : "lua"
+	}
+    ]
+}
