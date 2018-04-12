@@ -1,10 +1,12 @@
 local dir_path = YIRL_MODULES_PATH .. "Universal-LPC-spritesheet/"
-local w_sprite = 60
+local w_sprite = 36
 local h_sprite = 56
 local x0 = 14
 local y0 = 10
-local x_threshold = w_sprite + x0
-local y_threshold = h_sprite + y0
+local x_marging = 28
+local y_marging = 8
+local x_threshold = w_sprite + x_marging
+local y_threshold = h_sprite + y_marging
 
 function loadCanvas(canvas, texture, pos_sprite_x, pos_sprite_y,
 		    x, y)
@@ -16,7 +18,6 @@ function loadCanvas(canvas, texture, pos_sprite_x, pos_sprite_y,
 		      pos_sprite_y * y_threshold + y0,
 		      w_sprite, h_sprite)
    local ret = ywCanvasNewImgFromTexture(canvas, x, y, texture, r.ent)
-   print("ret:", ret)
    return ret
 end
 
@@ -24,6 +25,8 @@ function textureFromCaracter(caracter)
    caracter = Entity.wrapp(caracter)
    local sex = caracter.sex
    local type = caracter.type
+   local clothes = caracter.clothes
+   local clothes_len = clothes:len()
 
    if sex:to_string() ~= "female" and sex:to_string() ~= "male" then
       print(sex:to_string(), " isn't a gender")
@@ -34,6 +37,15 @@ function textureFromCaracter(caracter)
       "/" .. type:to_string() .. ".png"
    print("base sprite:", base_path)
    local texture = ywTextureNewImg(base_path);
+
+   local i = 0
+   while i < clothes_len do
+      local tmpTexture = ywTextureNewImg(dir_path .. clothes[i]:to_string());
+      print(i, clothes[i], tmpTexture)
+      print(ywTextureMerge(tmpTexture, nil, texture, nil))
+      yeDestroy(tmpTexture)
+      i = i + 1
+   end
    return texture
 end
 
