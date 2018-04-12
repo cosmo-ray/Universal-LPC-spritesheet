@@ -54,4 +54,6 @@ function init_lpcs(mod)
 		    "textureFromCaracter");
    yeCreateFunction("loadCanvas", mod, "loadCanvas");
    print("hi !!")
+   ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
+   ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
 end
