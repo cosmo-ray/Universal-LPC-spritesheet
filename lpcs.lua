@@ -26,7 +26,7 @@ function textureFromCaracter(caracter)
    local sex = caracter.sex
    local type = caracter.type
    local clothes = caracter.clothes
-   local clothes_len = clothes:len()
+   local clothes_len = yeLen(clothes)
 
    if sex:to_string() ~= "female" and sex:to_string() ~= "male" then
       print(sex:to_string(), " isn't a gender")
@@ -49,11 +49,58 @@ function textureFromCaracter(caracter)
    return texture
 end
 
+function createCaracterHandeler(caracter, canvas, father, name)
+   name = ylovePtrToString(name)
+   local ret = yeCreateArray(father, name)
+
+   ret = Entity.wrapp(ret)
+   ret.char = caracter
+   ret.text = textureFromCaracter(caracter)
+   ret.wid = canvas
+   ret.x = 0
+   ret.y = 0
+   return ret:cent()
+end
+
+function handelerSetOrigXY(handeler, x, y)
+   handeler = Entity.wrapp(handeler)
+   handeler.x = x
+   handeler.y = y
+end
+
+function handelerRefresh(handeler)
+   handeler = Entity.wrapp(handeler)
+   local x = 0
+   local y = 0
+   local wid = Canvas.wrapp(handeler.wid)
+   if handeler.canvas ~= nil then
+      local canvas = CanvasObj.wrapp(handeler.canvas)
+      x = canvas:pos():x()
+      y = canvas:pos():y()
+      wid:remove(canvas)
+   end
+   handeler.canvass = loadCanvas(wid.ent:cent(), handeler.text, handeler.x,
+				handeler.y, x, y)
+end
+
+function handelerMove(handeler, pos)
+   handeler = Entity.wrapp(handeler)
+   ywCanvasMoveObj(handeler.canvas, pos)
+end
+
 function init_lpcs(mod)
    yeCreateFunction("textureFromCaracter", mod,
 		    "textureFromCaracter");
    yeCreateFunction("loadCanvas", mod, "loadCanvas");
-   print("hi !!")
+   yeCreateFunction("handelerSetOrigXY", mod, "handelerSetOrigXY");
+   yeCreateFunction("handelerMove", mod, "handelerMove");
+   yeCreateFunction("createCaracterHandeler", mod, "createCaracterHandeler")
+   yeCreateFunction("handelerRefresh", mod, "handelerRefresh")
+
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
+   ygRegistreFunc(3, "handelerSetOrigXY", "ylpcsHandelerSetOrigXY")
+   ygRegistreFunc(1, "handelerRefresh", "ylpcsHandelerRefresh")
+   ygRegistreFunc(2, "handelerMove", "ylpcsHandelerMove")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
+   ygRegistreFunc(4 "createCaracterHandeler", "ylpcsCreateHandeler")
 end
