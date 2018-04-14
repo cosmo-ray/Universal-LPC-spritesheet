@@ -79,8 +79,8 @@ function handelerRefresh(handeler)
       y = canvas:pos():y()
       wid:remove(canvas)
    end
-   handeler.canvass = loadCanvas(wid.ent:cent(), handeler.text, handeler.x,
-				handeler.y, x, y)
+   handeler.canvas = loadCanvas(wid.ent, handeler.text, handeler.x:to_int(),
+				handeler.y:to_int(), x, y)
 end
 
 function handelerMove(handeler, pos)
@@ -102,5 +102,5 @@ function init_lpcs(mod)
    ygRegistreFunc(1, "handelerRefresh", "ylpcsHandelerRefresh")
    ygRegistreFunc(2, "handelerMove", "ylpcsHandelerMove")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
-   ygRegistreFunc(4 "createCaracterHandeler", "ylpcsCreateHandeler")
+   ygRegistreFunc(4, "createCaracterHandeler", "ylpcsCreateHandeler")
 end
