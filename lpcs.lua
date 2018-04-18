@@ -32,17 +32,14 @@ function textureFromCaracter(caracter)
       print(sex:to_string(), " isn't a gender")
       return nil
    end
-   print("gender: ", sex:to_string(), "race: ", type:to_string())
    local base_path = dir_path .. "/body/" .. sex:to_string() ..
       "/" .. type:to_string() .. ".png"
-   print("base sprite:", base_path)
    local texture = ywTextureNewImg(base_path);
 
    local i = 0
    while i < clothes_len do
       local tmpTexture = ywTextureNewImg(dir_path .. clothes[i]:to_string());
-      print(i, clothes[i], tmpTexture)
-      print(ywTextureMerge(tmpTexture, nil, texture, nil))
+      ywTextureMerge(tmpTexture, nil, texture, nil)
       yeDestroy(tmpTexture)
       i = i + 1
    end
@@ -56,6 +53,7 @@ function createCaracterHandeler(caracter, canvas, father, name)
    ret = Entity.wrapp(ret)
    ret.char = caracter
    ret.text = textureFromCaracter(caracter)
+   yeDestroy(ret.text)
    ret.wid = canvas
    ret.x = 0
    ret.y = 0
@@ -66,6 +64,12 @@ function handelerSetOrigXY(handeler, x, y)
    handeler = Entity.wrapp(handeler)
    handeler.x = x
    handeler.y = y
+end
+
+function handelerPos(handeler)
+   local canvas = CanvasObj.wrapp(yeGet(handeler, "canvas"))
+
+   return canvas:pos().ent:cent()
 end
 
 function handelerRefresh(handeler)
@@ -96,9 +100,12 @@ function init_lpcs(mod)
    yeCreateFunction("handelerMove", mod, "handelerMove");
    yeCreateFunction("createCaracterHandeler", mod, "createCaracterHandeler")
    yeCreateFunction("handelerRefresh", mod, "handelerRefresh")
+   yeCreateInt(w_sprite, mod, "w_sprite")
+   yeCreateInt(h_sprite, mod, "h_sprite")
 
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
    ygRegistreFunc(3, "handelerSetOrigXY", "ylpcsHandelerSetOrigXY")
+   ygRegistreFunc(3, "handelerPos", "ylpcsHandePos")
    ygRegistreFunc(1, "handelerRefresh", "ylpcsHandelerRefresh")
    ygRegistreFunc(2, "handelerMove", "ylpcsHandelerMove")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
