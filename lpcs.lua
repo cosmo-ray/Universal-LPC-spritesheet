@@ -1,4 +1,4 @@
-local dir_path = YIRL_MODULES_PATH .. "Universal-LPC-spritesheet/"
+local dir_path = Entity.wrapp(ygGet("lpcs.$path")):to_string()
 local w_sprite = 36
 local h_sprite = 56
 local x0 = 14
