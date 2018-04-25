@@ -89,6 +89,9 @@ end
 
 function handelerMove(handeler, pos)
    handeler = Entity.wrapp(handeler)
+   if handeler.canvas == nil then
+      handelerRefresh(handeler)
+   end
    ywCanvasMoveObj(handeler.canvas, pos)
 end
 
