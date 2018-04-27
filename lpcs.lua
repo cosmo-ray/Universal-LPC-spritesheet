@@ -62,8 +62,8 @@ end
 
 function handelerSetOrigXY(handeler, x, y)
    handeler = Entity.wrapp(handeler)
-   handeler.x = x
-   handeler.y = y
+   handeler.x = yLovePtrToNumber(x)
+   handeler.y = yLovePtrToNumber(y)
 end
 
 function handelerPos(handeler)
