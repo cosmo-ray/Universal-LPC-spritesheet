@@ -95,6 +95,16 @@ function handelerMove(handeler, pos)
    ywCanvasMoveObj(handeler.canvas, pos)
 end
 
+function handlerNextStep(handler)
+   handler = Entity.wrapp(handler)
+   local linelength = {7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 6, 6, 6, 6, 13, 13, 13, 13, 6}
+   if handler.x:to_int() < (linelength[handler.y:to_int()] - 1) then
+      handler.x = (handler.x:to_int() + 1)
+   else
+      handler.x = 0
+   end
+end
+
 function init_lpcs(mod)
    yeCreateFunction("textureFromCaracter", mod,
 		    "textureFromCaracter");
@@ -113,4 +123,5 @@ function init_lpcs(mod)
    ygRegistreFunc(2, "handelerMove", "ylpcsHandelerMove")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
    ygRegistreFunc(4, "createCaracterHandeler", "ylpcsCreateHandeler")
+   ygRegistreFunc(1, "handlerNextStep", "ylpcsHandlerNextStep")
 end
