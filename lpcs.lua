@@ -1,9 +1,9 @@
 local dir_path = Entity.wrapp(ygGet("lpcs.$path")):to_string()
-local w_sprite = 36
+local w_sprite = 42
 local h_sprite = 56
-local x0 = 14
+local x0 = 10
 local y0 = 10
-local x_marging = 28
+local x_marging = 22
 local y_marging = 8
 local x_threshold = w_sprite + x_marging
 local y_threshold = h_sprite + y_marging
