@@ -46,7 +46,7 @@ function textureFromCaracter(caracter)
    return texture
 end
 
-function createCaracterHandeler(caracter, canvas, father, name)
+function createCaracterHandler(caracter, canvas, father, name)
    name = ylovePtrToString(name)
    local ret = yeCreateArray(father, name)
 
@@ -60,39 +60,39 @@ function createCaracterHandeler(caracter, canvas, father, name)
    return ret:cent()
 end
 
-function handelerSetOrigXY(handeler, x, y)
-   handeler = Entity.wrapp(handeler)
-   handeler.x = yLovePtrToNumber(x)
-   handeler.y = yLovePtrToNumber(y)
+function handlerSetOrigXY(handler, x, y)
+   handler = Entity.wrapp(handler)
+   handler.x = yLovePtrToNumber(x)
+   handler.y = yLovePtrToNumber(y)
 end
 
-function handelerPos(handeler)
-   local canvas = CanvasObj.wrapp(yeGet(handeler, "canvas"))
+function handlerPos(handler)
+   local canvas = CanvasObj.wrapp(yeGet(handler, "canvas"))
 
    return canvas:pos().ent:cent()
 end
 
-function handelerRefresh(handeler)
-   handeler = Entity.wrapp(handeler)
+function handlerRefresh(handler)
+   handler = Entity.wrapp(handler)
    local x = 0
    local y = 0
-   local wid = Canvas.wrapp(handeler.wid)
-   if handeler.canvas ~= nil then
-      local canvas = CanvasObj.wrapp(handeler.canvas)
+   local wid = Canvas.wrapp(handler.wid)
+   if handler.canvas ~= nil then
+      local canvas = CanvasObj.wrapp(handler.canvas)
       x = canvas:pos():x()
       y = canvas:pos():y()
       wid:remove(canvas)
    end
-   handeler.canvas = loadCanvas(wid.ent, handeler.text, handeler.x:to_int(),
-				handeler.y:to_int(), x, y)
+   handler.canvas = loadCanvas(wid.ent, handler.text, handler.x:to_int(),
+				handler.y:to_int(), x, y)
 end
 
-function handelerMove(handeler, pos)
-   handeler = Entity.wrapp(handeler)
-   if handeler.canvas == nil then
-      handelerRefresh(handeler)
+function handlerMove(handler, pos)
+   handler = Entity.wrapp(handler)
+   if handler.canvas == nil then
+      handlerRefresh(handler)
    end
-   ywCanvasMoveObj(handeler.canvas, pos)
+   ywCanvasMoveObj(handler.canvas, pos)
 end
 
 function handlerNextStep(handler)
@@ -109,19 +109,19 @@ function init_lpcs(mod)
    yeCreateFunction("textureFromCaracter", mod,
 		    "textureFromCaracter");
    yeCreateFunction("loadCanvas", mod, "loadCanvas");
-   yeCreateFunction("handelerSetOrigXY", mod, "handelerSetOrigXY");
-   yeCreateFunction("handelerMove", mod, "handelerMove");
-   yeCreateFunction("createCaracterHandeler", mod, "createCaracterHandeler")
-   yeCreateFunction("handelerRefresh", mod, "handelerRefresh")
+   yeCreateFunction("handlerSetOrigXY", mod, "handlerSetOrigXY");
+   yeCreateFunction("handlerMove", mod, "handlerMove");
+   yeCreateFunction("createCaracterHandler", mod, "createCaracterHandler")
+   yeCreateFunction("handlerRefresh", mod, "handlerRefresh")
    yeCreateInt(w_sprite, mod, "w_sprite")
    yeCreateInt(h_sprite, mod, "h_sprite")
 
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
-   ygRegistreFunc(3, "handelerSetOrigXY", "ylpcsHandelerSetOrigXY")
-   ygRegistreFunc(3, "handelerPos", "ylpcsHandePos")
-   ygRegistreFunc(1, "handelerRefresh", "ylpcsHandelerRefresh")
-   ygRegistreFunc(2, "handelerMove", "ylpcsHandelerMove")
+   ygRegistreFunc(3, "handlerSetOrigXY", "ylpcsHandlerSetOrigXY")
+   ygRegistreFunc(3, "handlerPos", "ylpcsHandePos")
+   ygRegistreFunc(1, "handlerRefresh", "ylpcsHandlerRefresh")
+   ygRegistreFunc(2, "handlerMove", "ylpcsHandlerMove")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
-   ygRegistreFunc(4, "createCaracterHandeler", "ylpcsCreateHandeler")
+   ygRegistreFunc(4, "createCaracterHandler", "ylpcsCreateHandler")
    ygRegistreFunc(1, "handlerNextStep", "ylpcsHandlerNextStep")
 end
