@@ -95,6 +95,14 @@ function handlerMove(handler, pos)
    ywCanvasMoveObj(handler.canvas, pos)
 end
 
+function handlerSetPos(handler, pos)
+   handler = Entity.wrapp(handler)
+   if handler.canvas == nil then
+      handlerRefresh(handler)
+   end
+   ywCanvasObjSetPos(handler.canvas, pos)
+end
+
 function handlerNextStep(handler)
    handler = Entity.wrapp(handler)
    local linelength = {7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 6, 6, 6, 6, 13, 13, 13, 13, 6}
@@ -110,6 +118,7 @@ function init_lpcs(mod)
 		    "textureFromCaracter");
    yeCreateFunction("loadCanvas", mod, "loadCanvas");
    yeCreateFunction("handlerSetOrigXY", mod, "handlerSetOrigXY");
+   yeCreateFunction("handlerSetPos", mod, "handlerSetPos")
    yeCreateFunction("handlerMove", mod, "handlerMove");
    yeCreateFunction("createCaracterHandler", mod, "createCaracterHandler")
    yeCreateFunction("handlerRefresh", mod, "handlerRefresh")
@@ -121,6 +130,7 @@ function init_lpcs(mod)
    ygRegistreFunc(3, "handlerPos", "ylpcsHandePos")
    ygRegistreFunc(1, "handlerRefresh", "ylpcsHandlerRefresh")
    ygRegistreFunc(2, "handlerMove", "ylpcsHandlerMove")
+   ygRegistreFunc(2, "handlerSetPos", "ylpcsHandlerSetPos")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
    ygRegistreFunc(4, "createCaracterHandler", "ylpcsCreateHandler")
    ygRegistreFunc(1, "handlerNextStep", "ylpcsHandlerNextStep")
