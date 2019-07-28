@@ -60,6 +60,12 @@ function createCaracterHandler(caracter, canvas, father, name)
    return ret:cent()
 end
 
+function lpcsHandlerReload(handler)
+   handler = Entity.wrapp(handler)
+   handler.text = textureFromCaracter(handler.char)
+   handlerRefresh(handler)
+end
+
 function handlerSetOrigXY(handler, x, y)
    handler = Entity.wrapp(handler)
    handler.x = yLovePtrToNumber(x)
@@ -122,8 +128,11 @@ function init_lpcs(mod)
    yeCreateFunction("handlerMove", mod, "handlerMove");
    yeCreateFunction("createCaracterHandler", mod, "createCaracterHandler")
    yeCreateFunction("handlerRefresh", mod, "handlerRefresh")
+   yeCreateFunction("lpcsHandlerReload", mod, "handlerReload")
    yeCreateInt(w_sprite, mod, "w_sprite")
    yeCreateInt(h_sprite, mod, "h_sprite")
+   yeCreateInt(x_threshold, mod, "x_threshold")
+   yeCreateInt(y_threshold, mod, "y_threshold")
 
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
    ygRegistreFunc(3, "handlerSetOrigXY", "ylpcsHandlerSetOrigXY")
