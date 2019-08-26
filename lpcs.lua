@@ -60,6 +60,14 @@ function createCaracterHandler(caracter, canvas, father, name)
    return ret:cent()
 end
 
+function lpcsHandlerNullify(handler)
+   handler = Entity.wrapp(handler)
+
+   ywCanvasRemoveObj(handler.wid, handler.canvas)
+   handler.canvas = nil
+   handler.char = nil
+end
+
 function lpcsHandlerReload(handler)
    handler = Entity.wrapp(handler)
    handler.text = textureFromCaracter(handler.char)
@@ -129,6 +137,7 @@ function init_lpcs(mod)
    yeCreateFunction("createCaracterHandler", mod, "createCaracterHandler")
    yeCreateFunction("handlerRefresh", mod, "handlerRefresh")
    yeCreateFunction("lpcsHandlerReload", mod, "handlerReload")
+   yeCreateFunction("lpcsHandlerNullify", mod, "handlerNullify")
    yeCreateInt(w_sprite, mod, "w_sprite")
    yeCreateInt(h_sprite, mod, "h_sprite")
    yeCreateInt(x_threshold, mod, "x_threshold")
