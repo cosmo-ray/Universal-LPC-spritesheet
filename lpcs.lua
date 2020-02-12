@@ -1,4 +1,4 @@
-local dir_path = Entity.wrapp(ygGet("lpcs.$path")):to_string()
+local dir_path = Entity.wrapp(ygGet("lpcs.$path")):to_string() .. "/spritesheets/"
 local w_sprite = 42
 local h_sprite = 56
 local x0 = 10
