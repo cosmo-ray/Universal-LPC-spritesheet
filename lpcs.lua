@@ -16,7 +16,7 @@ function loadCanvas(canvas, texture, pos_sprite_x, pos_sprite_y,
    y = yLovePtrToNumber(y)
    local r = Rect.new(pos_sprite_x * x_threshold + x0,
 		      pos_sprite_y * y_threshold + y0,
-		      w_sprite, h_sprite)
+		      w_sprite, h_sprite - 2)
    local ret = ywCanvasNewImgFromTexture(canvas, x, y, texture, r.ent)
    return ret
 end
