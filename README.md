@@ -1,6 +1,8 @@
 Universal LPC Spritesheet Character Generator
 =============================================
 
+Modified version of https://github.com/jrconway3/Universal-LPC-spritesheet for YIRL engine
+
 Based on [Universal LPC Spritesheet](https://github.com/jrconway3/Universal-LPC-spritesheet).
 
 Try it out [here](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/).
