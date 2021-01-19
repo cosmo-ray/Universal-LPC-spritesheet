@@ -8,6 +8,12 @@ local y_marging = 8
 local x_threshold = w_sprite + x_marging
 local y_threshold = h_sprite + y_marging
 
+LPCS_LEFT = 9
+LPCS_DOWN = 10
+LPCS_RIGHT = 11
+LPCS_UP = 8
+LPCS_DEAD = 20
+
 function loadCanvas(canvas, texture, pos_sprite_x, pos_sprite_y,
 		    x, y)
    pos_sprite_x = yLovePtrToNumber(pos_sprite_x)
@@ -122,8 +128,10 @@ function handlerNextStep(handler)
    local linelength = {7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 6, 6, 6, 6, 13, 13, 13, 13, 6}
    if handler.x:to_int() < (linelength[handler.y:to_int()] - 1) then
       handler.x = (handler.x:to_int() + 1)
+      return handler.x:to_int() == (linelength[handler.y:to_int()] - 1)
    else
       handler.x = 0
+      return false
    end
 end
 
@@ -142,6 +150,12 @@ function init_lpcs(mod)
    yeCreateInt(h_sprite, mod, "h_sprite")
    yeCreateInt(x_threshold, mod, "x_threshold")
    yeCreateInt(y_threshold, mod, "y_threshold")
+
+   yeCreateInt(LPCS_LEFT, mod, "LEFT")
+   yeCreateInt(LPCS_DOWN, mod, "DOWN")
+   yeCreateInt(LPCS_RIGHT, mod, "RIGHT")
+   yeCreateInt(LPCS_UP, mod, "UP")
+   yeCreateInt(LPCS_DEAD, mod, "DEAD")
 
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
    ygRegistreFunc(3, "handlerSetOrigXY", "ylpcsHandlerSetOrigXY")
