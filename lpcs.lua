@@ -123,6 +123,14 @@ function handlerSetPos(handler, pos)
    ywCanvasObjSetPos(handler.canvas, pos)
 end
 
+function handlerSetPosXY(handler, x, y)
+   local pos = ywPosCreate(yLovePtrToNumber(x),
+			   yLovePtrToNumber(y))
+   local r = handlerSetPos(handler, pos)
+   yeDestroy(pos)
+   return r
+end
+
 function handlerNextStep(handler)
    handler = Entity.wrapp(handler)
    local linelength = {7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 6, 6, 6, 6, 13, 13, 13, 13, 6}
@@ -163,6 +171,7 @@ function init_lpcs(mod)
    ygRegistreFunc(1, "handlerRefresh", "ylpcsHandlerRefresh")
    ygRegistreFunc(2, "handlerMove", "ylpcsHandlerMove")
    ygRegistreFunc(2, "handlerSetPos", "ylpcsHandlerSetPos")
+   ygRegistreFunc(3, "handlerSetPosXY", "ylpcsHandlerSetPosXY")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
    ygRegistreFunc(4, "createCaracterHandler", "ylpcsCreateHandler")
    ygRegistreFunc(1, "handlerNextStep", "ylpcsHandlerNextStep")
