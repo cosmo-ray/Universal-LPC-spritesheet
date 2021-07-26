@@ -7,12 +7,27 @@ local x_marging = 22
 local y_marging = 8
 local x_threshold = w_sprite + x_marging
 local y_threshold = h_sprite + y_marging
+local texture_cache = nil
 
 LPCS_LEFT = 9
 LPCS_DOWN = 10
 LPCS_RIGHT = 11
 LPCS_UP = 8
 LPCS_DEAD = 20
+
+local function chacheAndGetImgTexture(path)
+   if texture_cache == nil then
+      texture_cache = {}
+   end
+
+   local t = texture_cache[path]
+   if yIsNNil(t) then
+      return t
+   end
+   t = ywTextureNewImg(path);
+   texture_cache[path] = t;
+   return t;
+end
 
 function loadCanvas(canvas, texture, pos_sprite_x, pos_sprite_y,
 		    x, y)
@@ -44,9 +59,8 @@ function textureFromCaracter(caracter)
 
    local i = 0
    while i < clothes_len do
-      local tmpTexture = ywTextureNewImg(dir_path .. clothes[i]:to_string());
+      local tmpTexture = chacheAndGetImgTexture(dir_path .. clothes[i]:to_string());
       ywTextureMerge(tmpTexture, nil, texture, nil)
-      yeDestroy(tmpTexture)
       i = i + 1
    end
    return texture
