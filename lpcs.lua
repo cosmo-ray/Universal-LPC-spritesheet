@@ -25,6 +25,7 @@ local function chacheAndGetImgTexture(path)
       return t
    end
    t = ywTextureNewImg(path);
+   ywTextureNormalize(t)
    texture_cache[path] = t;
    return t;
 end
@@ -56,11 +57,12 @@ function textureFromCaracter(caracter)
    local base_path = dir_path .. "/body/" .. sex:to_string() ..
       "/" .. type:to_string() .. ".png"
    local texture = ywTextureNewImg(base_path);
+   ywTextureNormalize(texture)
 
    local i = 0
    while i < clothes_len do
       local tmpTexture = chacheAndGetImgTexture(dir_path .. clothes[i]:to_string());
-      ywTextureMerge(tmpTexture, nil, texture, nil)
+      ywTextureMergeUnsafe(tmpTexture, nil, texture, nil)
       i = i + 1
    end
    return texture
