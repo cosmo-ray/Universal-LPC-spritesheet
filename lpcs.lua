@@ -108,6 +108,12 @@ function handlerPos(handler)
    return canvas:pos().ent:cent()
 end
 
+function handlerSize(handler)
+   local canvas = CanvasObj.wrapp(yeGet(handler, "canvas"))
+
+   return canvas:size().ent:cent()
+end
+
 function handlerRefresh(handler)
    handler = Entity.wrapp(handler)
    local x = 0
@@ -184,6 +190,7 @@ function init_lpcs(mod)
    ygRegistreFunc(6, "loadCanvas", "ylpcsLoasCanvas")
    ygRegistreFunc(3, "handlerSetOrigXY", "ylpcsHandlerSetOrigXY")
    ygRegistreFunc(3, "handlerPos", "ylpcsHandePos")
+   ygRegistreFunc(1, "handlerSize", "ylpcsHandlerSize")
    ygRegistreFunc(3, "handlerPos", "ylpcsHandlerPos")
    ygRegistreFunc(1, "handlerRefresh", "ylpcsHandlerRefresh")
    ygRegistreFunc(2, "handlerMove", "ylpcsHandlerMove")
