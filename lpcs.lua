@@ -82,6 +82,13 @@ function createCaracterHandler(caracter, canvas, father, name)
    return ret:cent()
 end
 
+function lpcsRemoveCanva(handler)
+   handler = Entity.wrapp(handler)
+
+   ywCanvasRemoveObj(handler.wid, handler.canvas)
+   handler.canvas = nil
+end
+
 function lpcsHandlerNullify(handler)
    handler = Entity.wrapp(handler)
 
@@ -176,6 +183,7 @@ function init_lpcs(mod)
    yeCreateFunction("handlerRefresh", mod, "handlerRefresh")
    yeCreateFunction("lpcsHandlerReload", mod, "handlerReload")
    yeCreateFunction("lpcsHandlerNullify", mod, "handlerNullify")
+   yeCreateFunction(lpcsRemoveCanva, mod, "handlerRemoveCanva")
    yeCreateInt(w_sprite, mod, "w_sprite")
    yeCreateInt(h_sprite, mod, "h_sprite")
    yeCreateInt(x_threshold, mod, "x_threshold")
