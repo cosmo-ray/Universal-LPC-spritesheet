@@ -50,6 +50,10 @@ function textureFromCaracter(caracter)
    local clothes = caracter.clothes
    local clothes_len = yeLen(clothes)
 
+   if yIsNil(sex) then
+      sex = caracter.gender
+   end
+
    if sex:to_string() ~= "female" and sex:to_string() ~= "male" then
       print(sex:to_string(), " isn't a gender")
       return nil
