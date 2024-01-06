@@ -1,10 +1,10 @@
 local dir_path = Entity.wrapp(ygGet("lpcs.$path")):to_string() .. "/spritesheets/"
-local w_sprite = 42
-local h_sprite = 56
-local x0 = 10
-local y0 = 10
-local x_marging = 22
-local y_marging = 8
+local w_sprite = 64
+local h_sprite = 64
+local x0 = 0
+local y0 = 0
+local x_marging = 0
+local y_marging = 0
 local x_threshold = w_sprite + x_marging
 local y_threshold = h_sprite + y_marging
 local texture_cache = nil
@@ -69,16 +69,29 @@ function textureFromCaracter(caracter)
       ywTextureMergeUnsafe(tmpTexture, nil, texture, nil)
       i = i + 1
    end
+   local weapon = caracter.sprite_weapon
+   if yIsNNil(weapon) then
+      local tmpTexture = chacheAndGetImgTexture(dir_path .. "/weapons/" .. weapon:to_string());
+      ywTextureMergeUnsafe(tmpTexture, nil, texture, nil)
+   end
    return texture
 end
 
 function createCaracterHandler(caracter, canvas, father, name)
    name = ylovePtrToString(name)
    local ret = yeCreateArray(father, name)
+   caracter = Entity.wrapp(caracter)
 
    ret = Entity.wrapp(ret)
    ret.char = caracter
    ret.text = textureFromCaracter(caracter)
+   -- right hand/male/longsword-attack.png
+   local oversize_weapon = caracter.oversize_weapon
+   if yIsNNil(oversize_weapon) then
+      local oversize_weapon_path = dir_path .. "/weapons/oversize/" .. yeGetString(oversize_weapon)
+      ret.oversize_text = ywTextureNewImg(oversize_weapon_path);
+   end
+
    yeDestroy(ret.text)
    ret.wid = canvas
    ret.x = 0
@@ -89,14 +102,18 @@ end
 function lpcsRemoveCanva(handler)
    handler = Entity.wrapp(handler)
 
+   ywCanvasRemoveObj(handler.wid, handler.oversized_canvas)
    ywCanvasRemoveObj(handler.wid, handler.canvas)
+   handler.oversized_canvas = nil
    handler.canvas = nil
 end
 
 function lpcsHandlerNullify(handler)
    handler = Entity.wrapp(handler)
 
+   ywCanvasRemoveObj(handler.wid, handler.oversized_canvas)
    ywCanvasRemoveObj(handler.wid, handler.canvas)
+   handler.oversized_canvas = nil
    handler.canvas = nil
    handler.char = nil
 end
@@ -136,8 +153,25 @@ function handlerRefresh(handler)
       y = canvas:pos():y()
       wid:remove(canvas)
    end
-   handler.canvas = loadCanvas(wid.ent, handler.text, handler.x:to_int(),
-				handler.y:to_int(), x, y)
+   if handler.oversized_canvas ~= nil then
+      local canvas = CanvasObj.wrapp(handler.oversized_canvas)
+      wid:remove(canvas)
+   end
+   local h_x = handler.x:to_int()
+   handler.canvas = loadCanvas(wid.ent, handler.text, h_x,
+			       handler.y:to_int(), x, y)
+   print(handler.oversize_text)
+   if handler.oversize_text ~= nil and
+      yeGetInt(handler.set_oversized_weapon) > 0 then
+      local h_y = handler.oversize_weapon_y:to_int()
+      local r = Rect.new(h_x * (x_threshold * 3),
+			 h_y * (y_threshold * 3),
+			 w_sprite * 3, h_sprite * 3)
+      handler.oversized_canvas = ywCanvasNewImgFromTexture(wid.ent, x - x_threshold,
+							   y - y_threshold,
+							   handler.oversize_text, r.ent)
+      print(handler.oversized_canvas)
+   end
 end
 
 function handlerMove(handler, pos)
