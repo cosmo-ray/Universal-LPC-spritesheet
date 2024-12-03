@@ -182,6 +182,15 @@ function handlerMove(handler, pos)
    ywCanvasMoveObj(handler.canvas, pos)
 end
 
+
+function handlerMoveXY(handler, x, y)
+   local pos = ywPosCreate(yLovePtrToNumber(x),
+			   yLovePtrToNumber(y))
+   local r = handlerMove(handler, pos)
+   yeDestroy(pos)
+   return r
+end
+
 function handlerSetPos(handler, pos)
    handler = Entity.wrapp(handler)
    if handler.canvas == nil then
@@ -237,12 +246,15 @@ function init_lpcs(mod)
    ygRegistreFunc(3, "handlerSetOrigXY", "ylpcsHandlerSetOrigXY")
    ygRegistreFunc(3, "handlerPos", "ylpcsHandePos")
    ygRegistreFunc(1, "handlerSize", "ylpcsHandlerSize")
-   ygRegistreFunc(3, "handlerPos", "ylpcsHandlerPos")
+   ygRegistreFunc(1, "handlerPos", "ylpcsHandlerPos")
    ygRegistreFunc(1, "handlerRefresh", "ylpcsHandlerRefresh")
    ygRegistreFunc(2, "handlerMove", "ylpcsHandlerMove")
+   ygRegistreFunc(3, "handlerMoveXY", "ylpcsHandlerMoveXY")
    ygRegistreFunc(2, "handlerSetPos", "ylpcsHandlerSetPos")
    ygRegistreFunc(3, "handlerSetPosXY", "ylpcsHandlerSetPosXY")
    ygRegistreFunc(1, "textureFromCaracter", "ylpcsTextureFromCaracter")
    ygRegistreFunc(4, "createCaracterHandler", "ylpcsCreateHandler")
    ygRegistreFunc(1, "handlerNextStep", "ylpcsHandlerNextStep")
+   ygRegistreFunc(1, "lpcsRemoveCanva", "ylpcsRemoveCanvas")
+   ygRegistreFunc(1, "lpcsHandlerNullify", "ylpcsHandlerNullify")
 end
